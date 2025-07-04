@@ -1,0 +1,49 @@
+# {{ basics.name }}
+**{{ basics.label }}**
+
+{% if show_contact %}
+📍 {{ basics.location.city }}, {{ basics.location.region }} {{ basics.location.postalCode }}  
+📧 {{ basics.email }} | 📞 {{ basics.phone }}  
+🔗 [LinkedIn]({{ basics.url }})
+{% endif %}
+
+---
+
+## 💡 Summary
+{{ summary }}
+
+---
+
+## 🛠️ Skills
+{% for skill in skills %}
+- **{{ skill.name }}**: {{ skill.keywords | join(", ") }}
+{% endfor %}
+
+---
+
+## 💼 Experience
+{% for job in experience %}
+### {{ job.position }} @ {{ job.company }}
+📍 {{ job.location }}  
+🗓️ {{ job.startDate }} → {{ job.endDate or "Present" }}
+
+{% for point in job.highlights %}
+- {{ point }}
+{% endfor %}
+{% endfor %}
+
+---
+
+## 🎓 Education
+{% for edu in education %}
+- **{{ edu.institution }}**, {{ edu.studyType }} in {{ edu.area }}
+{% endfor %}
+
+{% if show_certs %}
+---
+
+## 📜 Certifications
+{% for cert in certificates %}
+- {{ cert.name }} — {{ cert.issuer }}
+{% endfor %}
+{% endif %}

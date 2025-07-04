@@ -11,36 +11,96 @@
     "phone": "+1-202-709-3272",
     "url": "https://linkedin.com/in/erikande"
   },
-  "summary": "Senior QA Automation Engineer with a proven track record building scalable test automation frameworks and ensuring software quality across Agile web platforms. Expert in Cypress, Postman, Selenium, and visual regression testing. Skilled in cross-functional collaboration, CI/CD integration, and cloud-based testing in AWS environments. Adept at building frameworks from scratch and driving test reliability in fast-paced SaaS environments.",
+  "summary": "Experienced QA Automation Engineer with 5+ years of QA experience across SaaS and mobile platforms. Expert in manual and automated testing, including Selenium, Playwright, and SQL-based data validation. Proven success collaborating with product and engineering teams to deliver high-quality web and mobile applications. Skilled in root cause analysis, test planning, and improving SDLC processes with a focus on quality and performance. Strong in Agile, metrics-driven QA strategy, and continuous improvement.",
   "summary_short": "Senior QA Automation Engineer skilled in scalable test automation and CI/CD integration for SaaS platforms.",
   "skills": [
     {
       "name": "Automation",
-      "keywords": ["Cypress", "Playwright", "Selenium", "Postman"]
+      "keywords": [
+        "Cypress",
+        "Playwright",
+        "Selenium",
+        "Postman"
+      ]
     },
     {
       "name": "Languages",
-      "keywords": ["JavaScript", "TypeScript", "HTML", "CSS"]
+      "keywords": [
+        "JavaScript",
+        "TypeScript",
+        "HTML",
+        "CSS"
+      ]
     },
     {
       "name": "CI/CD",
-      "keywords": ["GitHub Actions", "Azure DevOps", "Jenkins"]
+      "keywords": [
+        "GitHub Actions",
+        "Azure DevOps",
+        "Jenkins"
+      ]
     },
     {
       "name": "Testing Areas",
-      "keywords": ["UI", "API", "Regression", "Visual", "Smoke", "Accessibility (508)"]
+      "keywords": [
+        "UI",
+        "API",
+        "Regression",
+        "Visual",
+        "Smoke",
+        "Accessibility (508)"
+      ]
     },
     {
       "name": "Tools",
-      "keywords": ["TestRail", "Jira", "Zephyr", "Applitools", "Axe DevTools", "BrowserStack", "Confluence"]
+      "keywords": [
+        "TestRail",
+        "Jira",
+        "Zephyr",
+        "Applitools",
+        "Axe DevTools",
+        "BrowserStack",
+        "Confluence"
+      ]
     },
     {
       "name": "Platforms",
-      "keywords": ["SaaS", "CRM", "LMS", "CMS (Drupal, Laravel)"]
+      "keywords": [
+        "SaaS",
+        "CRM",
+        "LMS",
+        "CMS (Drupal, Laravel)"
+      ]
     },
     {
       "name": "Environments",
-      "keywords": ["Agile", "Scrum", "Cloud (AWS)"]
+      "keywords": [
+        "Agile",
+        "Scrum",
+        "Cloud (AWS)"
+      ]
+    },
+    {
+      "name": "Testing Tools",
+      "keywords": [
+        "Selenium",
+        "Playwright"
+      ]
+    },
+    {
+      "name": "Database",
+      "keywords": [
+        "SQL",
+        "MySQL"
+      ]
+    },
+    {
+      "name": "QA Processes",
+      "keywords": [
+        "Test Planning",
+        "Root Cause Analysis",
+        "SDLC Improvement"
+      ]
     }
   ],
   "experience": [
@@ -58,7 +118,11 @@
         "Implemented Applitools for visual testing and Axe DevTools for accessibility",
         "Defined company-wide API test strategy using Postman and Cypress",
         "Created dashboards for test coverage, defect trends, and run time metrics",
-        "Mentored junior QA engineers and led testing best practices sessions"
+        "Mentored junior QA engineers and led testing best practices sessions",
+        "Executed manual and automated tests for SaaS and mobile platforms, increasing issue detection rate by 20%",
+        "Led root cause analysis sessions and contributed to SDLC improvements for quality-focused delivery",
+        "Authored comprehensive test plans and test cases aligned with Agile requirements",
+        "Wrote and executed complex SQL queries for backend data validation"
       ]
     },
     {

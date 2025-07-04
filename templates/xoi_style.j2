@@ -1,0 +1,38 @@
+# {{ basics.name }}
+
+{{ basics.email }} | {{ basics.phone }} | {{ basics.url }}
+
+**{{ basics.label }} – Cypress | API | CI/CD | Web + Mobile QA**
+
+## Summary
+{{ summary }}
+
+## Technical Skills
+• **Automation**: {{ skills[0].keywords | join(", ") }}  
+• **Languages**: {{ skills[1].keywords | join(", ") }}  
+• **CI/CD**: {{ skills[2].keywords | join(", ") }}  
+• **Testing Areas**: {{ skills[3].keywords | join(", ") }}  
+• **Tools**: {{ skills[4].keywords | join(", ") }}  
+• **Platforms**: {{ skills[5].keywords | join(", ") }}  
+• **Environments**: {{ skills[6].keywords | join(", ") }}  
+
+## Experience
+{% for job in experience %}
+### {{ job.position }} at {{ job.company }}
+**{{ job.startDate | fmt_date }} – {{ job.endDate | fmt_date if job.endDate else "Present" }}** | Location: {{ job.location }}
+
+{% for point in job.highlights %}
+- {{ point }}
+{% endfor %}
+
+{% endfor %}
+
+## Education
+{% for edu in education %}
+• {{ edu.institution }} — {{ edu.studyType }} in {{ edu.area }}
+{% endfor %}
+
+## Certifications
+{% for cert in certificates %}
+• {{ cert.issuer }} – {{ cert.name }}
+{% endfor %}

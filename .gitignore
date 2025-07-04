@@ -1,4 +1,36 @@
+# Byte-compiled / cache
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
 venv/
-output/
+.env/
+
+# Output artifacts
+output/*.md
+output/*.pdf
+output/*.html
+
+# Logs and temp
+*.log
+.DS_Store
+*.swp
+
+# Resume-cli artifacts (if any)
+resume.json
+
+# VS Code
+.vscode/
+
+# Pandoc temp files
+*.aux
+*.out
+*.toc
+*.log
+*.fls
+*.fdb_latexmk
+
+# Node.js
+node_modules/
