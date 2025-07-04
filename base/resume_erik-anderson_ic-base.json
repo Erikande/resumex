@@ -1,0 +1,139 @@
+{
+  "basics": {
+    "name": "Erik Anderson",
+    "label": "Senior QA Automation Engineer",
+    "location": {
+      "city": "Arlington",
+      "region": "VA",
+      "postalCode": "22203"
+    },
+    "email": "erika.qa@pm.me",
+    "phone": "+1-202-709-3272",
+    "url": "https://linkedin.com/in/erikande"
+  },
+  "summary": "Senior QA Automation Engineer with a proven track record building scalable test automation frameworks and ensuring software quality across Agile web platforms. Expert in Cypress, Postman, Selenium, and visual regression testing. Skilled in cross-functional collaboration, CI/CD integration, and cloud-based testing in AWS environments. Adept at building frameworks from scratch and driving test reliability in fast-paced SaaS environments.",
+  "skills": [
+    {
+      "name": "Automation",
+      "keywords": ["Cypress", "Playwright", "Selenium", "Postman"]
+    },
+    {
+      "name": "Languages",
+      "keywords": ["JavaScript", "TypeScript", "HTML", "CSS"]
+    },
+    {
+      "name": "CI/CD",
+      "keywords": ["GitHub Actions", "Azure DevOps", "Jenkins"]
+    },
+    {
+      "name": "Testing Areas",
+      "keywords": ["UI", "API", "Regression", "Visual", "Smoke", "Accessibility (508)"]
+    },
+    {
+      "name": "Tools",
+      "keywords": ["TestRail", "Jira", "Zephyr", "Applitools", "Axe DevTools", "BrowserStack", "Confluence"]
+    },
+    {
+      "name": "Platforms",
+      "keywords": ["SaaS", "CRM", "LMS", "CMS (Drupal, Laravel)"]
+    },
+    {
+      "name": "Environments",
+      "keywords": ["Agile", "Scrum", "Cloud (AWS)"]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Everfi (acquired by Blackbaud)",
+      "position": "Automation QA Engineer",
+      "location": "Washington, DC",
+      "startDate": "2018-08",
+      "endDate": "2025-04",
+      "summary": "Built Cypress-based UI/API frameworks for microservice-driven SaaS platforms.",
+      "highlights": [
+        "Integrated test suites into GitHub Actions and Azure DevOps for CI/CD",
+        "Reduced test flakiness by 82% and regression cycles by 8+ days/month",
+        "Developed reusable plugin-based test architecture across CRM/LMS platforms",
+        "Implemented Applitools for visual testing and Axe DevTools for accessibility",
+        "Defined company-wide API test strategy using Postman and Cypress",
+        "Created dashboards for test coverage, defect trends, and run time metrics",
+        "Mentored junior QA engineers and led testing best practices sessions"
+      ]
+    },
+    {
+      "company": "Questex LLC",
+      "position": "QA Automation Engineer",
+      "location": "Washington, DC",
+      "startDate": "2016-01",
+      "endDate": "2018-01",
+      "highlights": [
+        "Built and maintained automation for 40+ Drupal/Laravel platforms with Codeception",
+        "Reduced regression risk by enforcing CI-integrated QA gates",
+        "Collaborated in Agile sprints to align QA and dev velocity"
+      ]
+    },
+    {
+      "company": "AKQA (Contract)",
+      "position": "QA Engineer",
+      "location": "Washington, DC",
+      "startDate": "2014-12",
+      "endDate": "2015-07",
+      "highlights": [
+        "Led QA for USPS.com and Verizon digital campaigns",
+        "Delivered functional, regression, and accessibility test coverage"
+      ]
+    },
+    {
+      "company": "MMG",
+      "position": "QA Engineer",
+      "location": "Rockville, MD",
+      "startDate": "2011-06",
+      "endDate": "2014-03",
+      "highlights": [
+        "Designed and executed test plans for web apps and APIs",
+        "Developed integration test coverage for CMS and database layers",
+        "Delivered QA for NIH, NCI, and GlaxoSmithKline in Agile environments"
+      ]
+    },
+    {
+      "company": "agencyQ",
+      "position": "Quality Control Engineer",
+      "location": "Washington, DC",
+      "startDate": "2009-04",
+      "endDate": "2010-03",
+      "highlights": [
+        "Led QA validation for CMS-based marketing sites",
+        "Performed cross-browser and functional testing aligned to specs"
+      ]
+    },
+    {
+      "company": "Threespot Media",
+      "position": "QA Lead / Project Manager Intern",
+      "location": "Washington, DC",
+      "startDate": "2007-02",
+      "endDate": "2009-03",
+      "highlights": [
+        "Created test plans for sites like NPR, Peace Corps, and Kennedy Center",
+        "Led full-scope QA for HTML/CSS-based applications"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Guilford College",
+      "area": "Applied Studio Arts",
+      "studyType": "Bachelor of Arts"
+    },
+    {
+      "institution": "General Assembly",
+      "area": "Back-End Web Development",
+      "studyType": "Coursework"
+    }
+  ],
+  "certificates": [
+    {
+      "name": "Black Box Software Testing: Foundation Certificate",
+      "issuer": "AST"
+    }
+  ]
+}
