@@ -6,7 +6,7 @@ This project provides a clean, Markdown-first pipeline for managing and renderin
 
 ## 📁 Project Structure
 
-```
+```tree
 resume-cli-v2/
 ├── input/                  # JSON Resume files (AST-optimized)
 │   └── resume_planhub_ic.json
