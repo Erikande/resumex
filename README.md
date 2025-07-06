@@ -20,11 +20,13 @@ resume-cli-v2/
 │   ├── xoi_style.css
 │   └── ...
 ├── scripts/
-│   └── render_jsonresume_to_md.py
+│   ├── render_jsonresume_to_md.py
+│   └── validate_jsonschema.py
 ├── docs/                    # GitHub Pages deploy folder (optional)
 │   ├── index.html
 │   ├── resume.pdf
 │   └── style.css
+├── schema_custom.json       # Custom schema supporting JSON Resume spec
 ├── Makefile
 └── README.md
 ```
@@ -131,6 +133,7 @@ make resume-xoi             # Markdown + PDF via xoi_style.j2
 make resume-html            # HTML from Markdown + CSS
 make deploy-pages           # Copy output to /docs for GitHub Pages
 make clean                  # Remove output files
+make validate               # Validate resume JSON against schema_custom.json
 ```
 
 ---

@@ -1,10 +1,10 @@
 # === Configuration ===
-RESUME ?= planhub_ic
-INPUT = input/resume_$(RESUME).json
+RESUME ?= erik-anderson_ic-base
+INPUT ?= base/resume_$(RESUME).json
 MD_OUTPUT = output/resume_$(RESUME).md
 PDF_OUTPUT = output/resume_$(RESUME).pdf
 TEMPLATE ?= xoi_style.j2
-SCHEMA := schema_custom.json
+SCHEMA ?= schema_custom.json
 
 # === Targets ===
 

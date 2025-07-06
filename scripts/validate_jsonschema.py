@@ -1,23 +1,24 @@
 import json
 import sys
-from jsonschema import Draft4Validator
+from jsonschema import validate, ValidationError
 
 def main(schema_path, resume_path):
-    with open(schema_path, "r", encoding="utf-8") as f:
-        schema = json.load(f)
-    with open(resume_path, "r", encoding="utf-8") as f:
-        data = json.load(f)
+    try:
+        with open(schema_path, "r", encoding="utf-8") as s:
+            schema = json.load(s)
+        with open(resume_path, "r", encoding="utf-8") as r:
+            resume = json.load(r)
+    except Exception as e:
+        print(f"[✗] Error loading files: {e}")
+        sys.exit(1)
 
-    validator = Draft4Validator(schema)
-    errors = sorted(validator.iter_errors(data), key=lambda e: e.path)
-
-    if not errors:
-        print(f"[✓] {resume_path} is valid")
-    else:
-        print(f"[!] {resume_path} has schema errors:\n")
-        for error in errors:
-            path = ".".join(str(p) for p in error.path)
-            print(f"  - {path}: {error.message}")
+    try:
+        validate(instance=resume, schema=schema)
+        print(f"[✓] {resume_path} is valid against {schema_path}")
+    except ValidationError as e:
+        print(f"[✗] Validation failed:")
+        print(f"    → {e.message}")
+        print(f"    → At: {list(e.absolute_path)}")
         sys.exit(1)
 
 if __name__ == "__main__":
