@@ -1,25 +1,26 @@
 # {{ basics.name }}
+**{{ basics.label }}**  
+{{ basics.email }} | {{ basics.phone }} | [LinkedIn]({{ basics.profiles[0].url if basics.profiles }})  
 
-{{ basics.email }} | {{ basics.phone }} | {{ basics.profiles[0].url if basics.profiles }}
+---
 
-**{{ basics.label }}**
-
-## Summary
+**Summary**  
 {{ basics.summary }}
 
-## Technical Skills
-• **Automation**: {{ skills[0].keywords | join(", ") }}  
-• **Languages**: {{ skills[1].keywords | join(", ") }}  
-• **CI/CD**: {{ skills[2].keywords | join(", ") }}  
-• **Testing Areas**: {{ skills[3].keywords | join(", ") }}  
-• **Tools**: {{ skills[4].keywords | join(", ") }}  
-• **Platforms**: {{ skills[5].keywords | join(", ") }}  
-• **Environments**: {{ skills[6].keywords | join(", ") }}  
+---
 
-## Experience
+**Technical Skills**
+
+{% for skill in skills %}
+- **{{ skill.name }}**: {{ skill.keywords | join(", ") }}
+{% endfor %}
+
+---
+
+**Experience**  
 {% for job in work | sort(attribute='startDate', reverse=True) %}
-### {{ job.position }} at {{ job.name }}
-**{{ job.startDate | fmt_date }} – {{ job.endDate | fmt_date if job.endDate else "Present" }}** | Location: {{ job.location }}
+**{{ job.position }}**, {{ job.name }} — *{{ job.location }}*  
+*{{ job.startDate | fmt_date }} – {{ job.endDate | fmt_date if job.endDate else "Present" }}*
 
 {% for point in job.highlights %}
 - {{ point }}
@@ -27,12 +28,18 @@
 
 {% endfor %}
 
-## Education
+---
+
+**Education**
+
 {% for edu in education %}
-• {{ edu.institution }} — {{ edu.studyType }} in {{ edu.area }}
+- **{{ edu.institution }}** — {{ edu.studyType }} in {{ edu.area }}
 {% endfor %}
 
-## Certifications
+---
+
+**Certifications**
+
 {% for cert in certificates %}
-• {{ cert.issuer }} – {{ cert.name }}
+- {{ cert.name }} — {{ cert.issuer }}
 {% endfor %}

@@ -31,6 +31,25 @@ pandoc-pdf: resume-md  ## Render PDF from Markdown using Pandoc
 		-V mainfont="Helvetica Neue"
 	@echo "✅ PDF generated at: $(PDF_OUTPUT)"
 
+pandoc-pdf: resume-md  ## Render PDF from Markdown using Pandoc
+	pandoc output/resume_$(RESUME).md -o output/resume_$(RESUME).pdf \
+		--pdf-engine=xelatex \
+		-V geometry=margin=0.7in \
+		-V fontsize=10pt \
+		-V lineheight=1.05 \
+		-V mainfont="Helvetica Neue"
+	@echo "✅ PDF rendered from Markdown using default template"
+
+resume-xoi:  ## Build resume PDF using the XOi-style Markdown + Pandoc pipeline
+	python3 scripts/render_jsonresume_to_md.py $(INPUT) --template templates/xoi_style.j2
+	pandoc output/resume_$(RESUME).md -o output/resume_$(RESUME).pdf \
+		--pdf-engine=xelatex \
+		-V geometry=margin=0.7in \
+		-V fontsize=10pt \
+		-V lineheight=1.05 \
+		-V mainfont="Helvetica Neue"
+	@echo "✅ XOi-style PDF created at: output/resume_$(RESUME).pdf"
+
 resume-cli-pdf:  ## Render PDF using resume-cli with 'compact' theme
 	@echo "Rendering PDF via resume-cli with 'compact' theme"
 	resume export $(PDF_OUTPUT) --resume $(INPUT) --theme compact || true
