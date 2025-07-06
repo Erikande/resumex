@@ -50,6 +50,13 @@ resume-xoi:  ## Build resume PDF using the XOi-style Markdown + Pandoc pipeline
 		-V mainfont="Helvetica Neue"
 	@echo "✅ XOi-style PDF created at: output/resume_$(RESUME).pdf"
 
+resume-html: resume-md  ## Render clean HTML from Markdown
+	pandoc output/resume_$(RESUME).md -o output/resume_$(RESUME).html \
+		--standalone \
+		--metadata title="Erik Anderson Resume" \
+		--css templates/xoi_style.css
+	@echo "✅ HTML resume created at: output/resume_$(RESUME).html"
+
 resume-cli-pdf:  ## Render PDF using resume-cli with 'compact' theme
 	@echo "Rendering PDF via resume-cli with 'compact' theme"
 	resume export $(PDF_OUTPUT) --resume $(INPUT) --theme compact || true

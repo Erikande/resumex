@@ -1,6 +1,6 @@
 # Resume CLI V2
 
-This project provides a clean, Markdown-first pipeline for managing and rendering resumes using the [JSON Resume Schema](https://jsonresume.org/schema/). It uses Jinja2 templates for layout and Pandoc for PDF generation.
+This project provides a clean, Markdown-first pipeline for managing and rendering resumes using the [JSON Resume Schema](https://jsonresume.org/schema/). It uses Jinja2 templates for layout, Pandoc for PDF and HTML generation, and a Makefile for streamlined builds.
 
 ---
 
@@ -8,15 +8,23 @@ This project provides a clean, Markdown-first pipeline for managing and renderin
 
 ```
 resume-cli-v2/
-├── input/                  # JSON Resume files (AST-optimized)
-│   └── resume_planhub_ic.json
-├── output/                 # Generated output
-│   ├── resume_planhub_ic.md
-│   └── resume_planhub_ic.pdf
+├── base/                    # Canonical source JSON resumes
+│   └── resume_erik-anderson_ic-base.json
+├── input/                   # Alternate resumes (JD-optimized, archived)
+├── output/                  # Generated output files (PDF, MD, HTML)
+│   ├── resume_<name>.md
+│   ├── resume_<name>.pdf
+│   └── resume_<name>.html
+├── templates/               # Jinja2 templates and CSS for rendering
+│   ├── xoi_style.j2
+│   ├── xoi_style.css
+│   └── ...
 ├── scripts/
 │   └── render_jsonresume_to_md.py
-├── templates/
-│   └── xoi_style.j2
+├── docs/                    # GitHub Pages deploy folder (optional)
+│   ├── index.html
+│   ├── resume.pdf
+│   └── style.css
 ├── Makefile
 └── README.md
 ```
@@ -25,27 +33,34 @@ resume-cli-v2/
 
 ## ✅ Usage
 
-### 🛠 Render Markdown + PDF
+### 🛠 Build Full Resume (Markdown + PDF)
 
 ```bash
-make resume RESUME=planhub_ic
+make resume-xoi RESUME=erik-anderson_ic-base INPUT=base/resume_erik-anderson_ic-base.json
 ```
 
-- Reads `input/resume_planhub_ic.json`
-- Renders to:
-  - `output/resume_planhub_ic.md`
-  - `output/resume_planhub_ic.pdf`
+This renders:
 
-Optional flags:
+- `output/resume_erik-anderson_ic-base.md`
+- `output/resume_erik-anderson_ic-base.pdf`
+
+### 🌐 Build HTML Version
 
 ```bash
-make resume RESUME=planhub_ic TEMPLATE=xoi_style.j2
+make resume-html RESUME=erik-anderson_ic-base INPUT=base/resume_erik-anderson_ic-base.json
 ```
 
-| Flag        | Description                          |
-|-------------|--------------------------------------|
-| `RESUME`    | Resume filename stem (no extension)  |
-| `TEMPLATE`  | Jinja2 template filename             |
+This renders:
+
+- `output/resume_erik-anderson_ic-base.html`
+
+### 🚀 Deploy to GitHub Pages
+
+```bash
+make deploy-pages RESUME=erik-anderson_ic-base
+```
+
+This copies `.html`, `.pdf`, and `.css` to `docs/` for GitHub Pages.
 
 ---
 
@@ -55,13 +70,13 @@ make resume RESUME=planhub_ic TEMPLATE=xoi_style.j2
 - [Pandoc](https://pandoc.org/)
 - [MacTeX](https://tug.org/mactex/) or any `xelatex`-capable engine
 
-Install Python deps:
+Install Python dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Install LaTeX (macOS):
+Install LaTeX on macOS:
 
 ```bash
 brew install --cask mactex
@@ -71,18 +86,21 @@ brew install --cask mactex
 
 ## 📄 JSON Resume Format
 
-Each resume must follow the [JSON Resume Schema](https://jsonresume.org/schema/). Example keys:
+Each resume must follow the [JSON Resume Schema](https://jsonresume.org/schema/). Example:
 
 ```json
 {
   "basics": {
     "name": "Erik Anderson",
     "email": "erika.qa@pm.me",
-    "phone": "+1-202-709-3272"
+    "phone": "+1-202-709-3272",
+    "profiles": [
+      { "network": "LinkedIn", "url": "https://www.linkedin.com/in/erikande/" }
+    ]
   },
   "summary": "...",
   "skills": [...],
-  "experience": [...],
+  "work": [...],
   "education": [...],
   "certificates": [...]
 }
@@ -90,56 +108,57 @@ Each resume must follow the [JSON Resume Schema](https://jsonresume.org/schema/)
 
 ---
 
-## 🧠 Template Features
+## 🎨 Templates
 
-### ✨ `xoi_style.j2` Template
+### ✨ `xoi_style.j2`
 
-- Headline layout with bold role
-- Formatted dates: `MM-YYYY`
-- ASCII-only: no unicode dashes or symbols
-- Clean for Markdown/PDF export
+- One-page layout optimized for recruiters
+- Helvetica Neue, tight vertical spacing
+- Clean formatting for skills, work history, and education
+- Used for both PDF and HTML builds
 
-Supported template flags (opt-in via JSON or code):
+### 🎨 `xoi_style.css`
 
-```jinja2
-{% if show_contact %} ... {% endif %}
-{% if summary_short %} ... {% endif %}
-{% if show_certs %} ... {% endif %}
-```
-
-These can be added in the render script:
-
-```python
-data["show_contact"] = True
-```
+- Matches XOi-style PDF formatting
+- Used when rendering standalone HTML with Pandoc
 
 ---
 
-## 🔧 Makefile Targets
+## 🛠 Makefile Targets
 
 ```bash
-make resume RESUME=name         # render Markdown + PDF
-make clean                      # remove all output files
+make resume-xoi             # Markdown + PDF via xoi_style.j2
+make resume-html            # HTML from Markdown + CSS
+make deploy-pages           # Copy output to /docs for GitHub Pages
+make clean                  # Remove output files
 ```
 
 ---
 
-## 📄 Output Files
+## 🔄 Output Files
 
-| Format   | Output Path                  |
-|----------|------------------------------|
-| Markdown | `output/resume_<name>.md`    |
-| PDF      | `output/resume_<name>.pdf`   |
-
----
-
-## 🛠 To-Do
-
-- [ ] Add `summary_short` fallback logic
-- [ ] Support contact/certs toggles
-- [ ] Automate GPT resume AST optimization
-- [ ] Add diff/compare tooling
+| Format   | Path                              |
+|----------|-----------------------------------|
+| Markdown | `output/resume_<name>.md`         |
+| PDF      | `output/resume_<name>.pdf`        |
+| HTML     | `output/resume_<name>.html`       |
+| GH Pages | `docs/index.html`, `docs/resume.pdf` |
 
 ---
 
-Made with ☕️ and clean CLI vibes.
+## 🌐 GitHub Pages (optional)
+
+To publish your resume:
+
+1. Enable Pages in repo → Settings → Pages
+2. Choose `main` or `clean-rebuild` branch
+3. Set folder: `docs/`
+4. Access your live resume at:
+
+```
+https://<your-username>.github.io/<your-repo-name>/
+```
+
+---
+
+Made with ☕️, Markdown, and CLI power.
