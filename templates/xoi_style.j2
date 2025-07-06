@@ -1,11 +1,11 @@
 # {{ basics.name }}
 
-{{ basics.email }} | {{ basics.phone }} | {{ basics.url }}
+{{ basics.email }} | {{ basics.phone }} | {{ basics.profiles[0].url if basics.profiles }}
 
-**{{ basics.label }} – Cypress | API | CI/CD | Web + Mobile QA**
+**{{ basics.label }}**
 
 ## Summary
-{{ summary }}
+{{ basics.summary }}
 
 ## Technical Skills
 • **Automation**: {{ skills[0].keywords | join(", ") }}  
@@ -17,8 +17,8 @@
 • **Environments**: {{ skills[6].keywords | join(", ") }}  
 
 ## Experience
-{% for job in experience %}
-### {{ job.position }} at {{ job.company }}
+{% for job in work | sort(attribute='startDate', reverse=True) %}
+### {{ job.position }} at {{ job.name }}
 **{{ job.startDate | fmt_date }} – {{ job.endDate | fmt_date if job.endDate else "Present" }}** | Location: {{ job.location }}
 
 {% for point in job.highlights %}

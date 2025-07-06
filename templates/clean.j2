@@ -1,49 +1,32 @@
 # {{ basics.name }}
-**{{ basics.label }}**
 
-{% if show_contact %}
-{{ basics.location.city }}, {{ basics.location.region }} {{ basics.location.postalCode }}  
-Email: {{ basics.email }} | Phone: {{ basics.phone }}  
-LinkedIn: {{ basics.url }}
-{% endif %}
-
----
+{{ basics.label }}  
+{{ basics.email }} | {{ basics.phone }} | {{ basics.profiles[0].url if basics.profiles }}
 
 ## Summary
-{{ summary }}
-
----
+{{ basics.summary }}
 
 ## Skills
 {% for skill in skills %}
-- **{{ skill.name }}**: {{ skill.keywords | join(", ") }}
+**{{ skill.name }}**: {{ skill.keywords | join(", ") }}
 {% endfor %}
 
----
-
 ## Experience
-{% for job in experience %}
-### {{ job.position }} at {{ job.company }}
-Location: {{ job.location }}  
-Dates: {{ job.startDate }} to {{ job.endDate or "Present" }}
+{% for job in work | sort(attribute='startDate', reverse=True) %}
+**{{ job.position }}**, {{ job.name }}  
+{{ job.location }} | {{ job.startDate | fmt_date }} – {{ job.endDate | fmt_date if job.endDate else "Present" }}
 
 {% for point in job.highlights %}
 - {{ point }}
 {% endfor %}
 {% endfor %}
 
----
-
 ## Education
 {% for edu in education %}
-- **{{ edu.institution }}**, {{ edu.studyType }} in {{ edu.area }}
+{{ edu.institution }} — {{ edu.studyType }} in {{ edu.area }}
 {% endfor %}
-
-{% if show_certs %}
----
 
 ## Certifications
 {% for cert in certificates %}
-- {{ cert.name }} — {{ cert.issuer }}
+{{ cert.name }} — {{ cert.issuer }}
 {% endfor %}
-{% endif %}

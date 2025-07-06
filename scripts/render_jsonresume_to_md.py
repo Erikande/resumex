@@ -1,47 +1,49 @@
+import sys
 import json
-import argparse
-from pathlib import Path
+from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
-from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-def fmt_date(value):
-    """Format date from YYYY-MM to MM-YYYY"""
-    if not value:
+def fmt_date(date_str):
+    if not date_str:
         return ""
     try:
-        return datetime.strptime(value, "%Y-%m").strftime("%m-%Y")
+        return datetime.strptime(date_str, "%Y-%m").strftime("%b %Y")
     except ValueError:
-        return value  # return as-is if parsing fails
-
-def render_resume(data, output_path, template_name):
-    template_dir = Path(__file__).parent.parent / "templates"
-    env = Environment(
-        loader=FileSystemLoader(template_dir),
-        autoescape=select_autoescape()
-    )
-    env.filters["fmt_date"] = fmt_date
-
-    template = env.get_template(template_name)
-    rendered = template.render(**data)
-
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(rendered)
-    print(f"[✓] Rendered Markdown written to {output_path}")
+        return date_str
 
 def main():
-    parser = argparse.ArgumentParser(description="Render a JSON Resume to Markdown")
-    parser.add_argument("input", help="Path to JSON Resume")
-    parser.add_argument("--template", required=True, help="Jinja2 template filename (e.g. xoi_style.j2)")
-    args = parser.parse_args()
+    if len(sys.argv) < 4:
+        print("Usage: python render_jsonresume_to_md.py input.json --template template_file.j2")
+        sys.exit(1)
 
-    input_path = Path(args.input)
-    output_md = Path("output") / input_path.with_suffix(".md").name
+    input_file = sys.argv[1]
+    template_flag = sys.argv[2]
+    template_file = sys.argv[3]
 
-    with open(input_path, "r", encoding="utf-8") as f:
-        data = json.load(f)
+    if template_flag != "--template":
+        print("Error: Second argument must be --template")
+        sys.exit(1)
 
-    render_resume(data, output_md, args.template)
+    # Load the JSON data
+    with open(input_file, "r", encoding="utf-8") as f:
+        resume_data = json.load(f)
+
+    # Setup Jinja2 environment
+    env = Environment(loader=FileSystemLoader(searchpath="."), trim_blocks=True, lstrip_blocks=True)
+    env.filters["fmt_date"] = fmt_date
+
+    # Load the template
+    template = env.get_template(template_file)
+
+    # Render the resume
+    output = template.render(resume_data)
+
+    # Write to Markdown file
+    output_file = input_file.replace(".json", ".md").split("/")[-1]
+    with open(f"output/{output_file}", "w", encoding="utf-8") as f:
+        f.write(output)
+
+    print(f"[✓] Rendered Markdown written to output/{output_file}")
 
 if __name__ == "__main__":
     main()
