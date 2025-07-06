@@ -4,13 +4,13 @@
 {% if show_contact %}
 📍 {{ basics.location.city }}, {{ basics.location.region }} {{ basics.location.postalCode }}  
 📧 {{ basics.email }} | 📞 {{ basics.phone }}  
-🔗 [LinkedIn]({{ basics.url }})
+🔗 [LinkedIn]({{ basics.profiles[0].url if basics.profiles }})
 {% endif %}
 
 ---
 
 ## 💡 Summary
-{{ summary }}
+{{ basics.summary }}
 
 ---
 
@@ -22,10 +22,10 @@
 ---
 
 ## 💼 Experience
-{% for job in experience %}
-### {{ job.position }} @ {{ job.company }}
+{% for job in work | sort(attribute='startDate', reverse=True) %}
+### {{ job.position }} @ {{ job.name }}
 📍 {{ job.location }}  
-🗓️ {{ job.startDate }} → {{ job.endDate or "Present" }}
+🗓️ {{ job.startDate | fmt_date }} → {{ job.endDate | fmt_date if job.endDate else "Present" }}
 
 {% for point in job.highlights %}
 - {{ point }}
@@ -39,11 +39,9 @@
 - **{{ edu.institution }}**, {{ edu.studyType }} in {{ edu.area }}
 {% endfor %}
 
-{% if show_certs %}
 ---
 
 ## 📜 Certifications
 {% for cert in certificates %}
 - {{ cert.name }} — {{ cert.issuer }}
 {% endfor %}
-{% endif %}
