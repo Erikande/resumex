@@ -73,6 +73,12 @@ validate:  ## Validate resume JSON against schema_custom.json
 	@echo "Validating resume JSON against $(SCHEMA)..."
 	@python3 scripts/validate_jsonschema.py $(SCHEMA) $(INPUT)
 
+export-app-package:  ## Export resume to application folder
+	@mkdir -p "$(APP_ROOT)/$(COMPANY)"
+	cp output/resume_$(RESUME).pdf "$(APP_ROOT)/$(COMPANY)/Erik_Anderson_$(ROLE)_Resume.pdf"
+	@echo "✅ Resume copied to:"
+	@echo "   → $(APP_ROOT)/$(COMPANY)/Erik_Anderson_$(ROLE)_Resume.pdf"
+
 lint:  ## Lint generated Markdown with markdownlint
 	markdownlint output/*.md
 
