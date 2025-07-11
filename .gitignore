@@ -39,3 +39,4 @@ input/archive/
 # Ignore all personal or generated inputs
 input/
 
+backups/
