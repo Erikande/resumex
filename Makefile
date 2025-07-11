@@ -1,6 +1,6 @@
 .PHONY: resume resume-md pandoc-pdf resume-cli-pdf html html-theme validate lint clean open help export-app-package backup-input optimize apply ship
 
-RESUME ?= resume
+RESUME ?= erik_anderson_resume_$(ROLE)
 INPUT ?= input/$(RESUME).json
 OUTPUT_MD ?= output/$(RESUME).md
 OUTPUT_PDF ?= output/$(RESUME).pdf
@@ -12,11 +12,11 @@ resume: resume-md pandoc-pdf  ## Render full pipeline: Markdown + PDF
 
 resume-md:  ## Render Markdown from JSON resume
 	@echo "Rendering Markdown for: $(RESUME)"
-	python3 scripts/render_jsonresume_to_md.py $(INPUT) --template $(TEMPLATE)
+	python3 scripts/render_jsonresume_to_md.py "$(INPUT)" --template $(TEMPLATE)
 
 pandoc-pdf:  ## Convert Markdown to PDF via Pandoc
 	@echo "Generating PDF from Markdown..."
-	pandoc $(OUTPUT_MD) -o $(OUTPUT_PDF) \
+	pandoc "$(OUTPUT_MD)" -o "$(OUTPUT_PDF)" \
 		--pdf-engine=xelatex \
 		-V geometry=margin=0.7in \
 		-V fontsize=10pt \
@@ -26,14 +26,10 @@ pandoc-pdf:  ## Convert Markdown to PDF via Pandoc
 
 validate:  ## Validate resume JSON against schema and top-level key checks
 	@echo "Validating resume JSON against $(SCHEMA)..."
-	@python3 scripts/validate_jsonschema.py $(SCHEMA) $(INPUT)
+	@python3 scripts/validate_jsonschema.py $(SCHEMA) "$(INPUT)"
 
-optimize:  ## Manually paste ATS-optimized resume and validate before overwriting
-	@mkdir -p backups
-	cp $(INPUT) backups/$(notdir $(INPUT)).bak.$(shell date +%Y%m%d_%H%M%S).json
-	@echo "🛡️  Backup created before optimization"
-	@bash scripts/optimize_resume.sh $(INPUT)
-	@$(MAKE) validate RESUME=$(RESUME)
+optimize:
+	@bash scripts/optimize_resume.sh "$(ROLE)" "$(COMPANY)"
 
 lint:  ## Lint generated Markdown with markdownlint
 	markdownlint output/*.md

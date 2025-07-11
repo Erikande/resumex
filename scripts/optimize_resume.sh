@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Usage:
-# ./scripts/optimize_resume.sh <ROLE_SLUG> <COMPANY_SLUG>
-# Example:
-# ./scripts/optimize_resume.sh senior_qa_engineer coursedog
-
 ROLE_SLUG=$1
 COMPANY_SLUG=$2
 
@@ -33,17 +28,8 @@ echo "→ Input file: $DEST"
 echo "→ JD: (paste into GPT)"
 echo "📂 Prompt file: Resume Prompts 2025/ATS Resume Optimizer (Schema-Safe).md"
 echo "💡 Tip: Use 'diff -u $BASE $DEST' to see what changed."
-
 echo ""
+
 read -p "⏳ Press Enter once you've optimized the file in GPT and saved to $DEST..."
 
-echo "🔎 Validating optimized resume..."
-make validate INPUT="$DEST" || exit 1
-
-echo "🖨️ Rendering PDF..."
-make resume RESUME="$RESUME" INPUT="$DEST"
-
-echo ""
-echo "📁 PDF generated: output/${RESUME}.pdf"
-echo "✅ Review complete. If satisfied, run:"
-echo "→ make export-app-package RESUME=$RESUME COMPANY=$COMPANY_SLUG ROLE=$ROLE_SLUG"
+echo "✅ Proceeding with validation and rendering in Makefile..."
