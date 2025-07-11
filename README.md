@@ -1,211 +1,90 @@
-# Resume CLI V2
+# Resume CLI Workflow
 
-This project provides a clean, Markdown-first pipeline for managing and rendering resumes using the [JSON Resume Schema](https://jsonresume.org/schema/). It uses Jinja2 templates for layout, Pandoc for PDF and HTML generation, and a Makefile for streamlined builds.
+This project is a full-featured resume build and deployment pipeline using `make`, Pandoc, Jinja2 templates, Markdown linting, and JSON Resume schema validation. It supports ATS optimization workflows and job application packaging.
 
 ---
 
-## 📁 Project Structure
+## 🚀 Features
 
-```tree
+- ✅ Generate Markdown + PDF from JSON Resume
+- ✅ Validate JSON with schema + sanity checks
+- ✅ Warp.dev workflows (resume_parse, validate, lint, render, export)
+- ✅ Export resume PDF to job application folder
+- ✅ Optimizer script to assist with ATS tuning
+- ✅ Supports virtualenv activation
+
+---
+
+## 📁 Directory Layout
+
+```
 resume-cli-v2/
-├── base/                    # Canonical source JSON resumes
-│   └── resume_erik-anderson_ic-base.json
-├── input/                   # Alternate resumes (JD-optimized, archived)
-├── output/                  # Generated output files (PDF, MD, HTML)
-│   ├── resume_<name>.md
-│   ├── resume_<name>.pdf
-│   └── resume_<name>.html
-├── templates/               # Jinja2 templates and CSS for rendering
-│   ├── xoi_style.j2
-│   ├── xoi_style.css
-│   └── ...
-├── scripts/
-│   ├── render_jsonresume_to_md.py
-│   └── validate_jsonschema.py
-├── docs/                    # GitHub Pages deploy folder (optional)
-│   ├── index.html
-│   ├── resume.pdf
-│   └── style.css
-├── schema_custom.json       # Custom schema supporting JSON Resume spec
-├── Makefile
+├── input/               # Optimized resume JSONs per job
+├── base/                # Stable master resume JSON
+├── output/              # Generated Markdown + PDF files
+├── templates/           # Jinja2 + PDF templates
+├── scripts/             # Helper scripts (validate, render, optimize)
+├── docs/                # GH Pages deployment files
+├── .warp/workflows/     # Warp workflow YAMLs
+├── schema_custom.json   # JSON Resume validation schema
+├── Makefile             # Task runner
 └── README.md
 ```
 
 ---
 
-## ✅ Usage
-
-### 🧱 Build from JSON
-
-To build from any JSON file in `input/`, just provide its basename:
+## ⚙️ Setup
 
 ```bash
-make resume RESUME=your_resume_basename
-```
-
-This expects a file at:
-
-```
-input/your_resume_basename.json
-```
-
-It will generate:
-
-- `output/your_resume_basename.md`
-- `output/your_resume_basename.pdf`
-
-### 🌐 Build HTML Version
-
-```bash
-make resume-html RESUME=your_resume_basename
-```
-
-Generates:
-
-- `output/your_resume_basename.html`
-
-### 📤 Deploy to GitHub Pages
-
-```bash
-make deploy-pages RESUME=your_resume_basename
-```
-
-Copies `.html`, `.pdf`, and `.css` to `docs/` for GH Pages:
-
-```
-docs/index.html
-docs/resume.pdf
-docs/style.css
-```
-
-### 📂 Export Application Package
-
-Save rendered resume to your organized app folder:
-
-```bash
-make export-app-package RESUME=your_resume_basename COMPANY=FedEx ROLE=Software_Quality_Engineer_Advisor
-```
-
-This creates:
-
-```
-~/Documents/Heather Job Stack/3. 📬 Applications/Sent/FedEx/
-└── Erik_Anderson_Software_Quality_Engineer_Advisor_Resume.pdf
-```
-
-🔖 *Cover letter functionality is disabled unless manually included.*
-
-### ✅ Validate JSON Resume
-
-```bash
-make validate RESUME=your_resume_basename
-```
-
-Checks against `schema_custom.json`
-
-### ✅ Lint Markdown
-
-```bash
-make lint
-```
-
-Runs `markdownlint` on all Markdown in `output/`
-
----
-
-## 📦 Requirements
-
-- Python 3.8+
-- [Pandoc](https://pandoc.org/)
-- [MacTeX](https://tug.org/mactex/) or any `xelatex` engine
-
-Install dependencies:
-
-```bash
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
-brew install --cask mactex  # macOS only
+brew install pandoc
 ```
 
 ---
 
-## 📄 JSON Resume Format
+## 📦 Make Targets
 
-Each resume must follow the [JSON Resume Schema](https://jsonresume.org/schema/). Example:
-
-```json
-{
-  "basics": {
-    "name": "Erik Anderson",
-    "email": "erika.qa@pm.me",
-    "phone": "+1-202-709-3272",
-    "profiles": [
-      { "network": "LinkedIn", "url": "https://www.linkedin.com/in/erikande/" }
-    ]
-  },
-  "summary": "...",
-  "skills": [...],
-  "work": [...],
-  "education": [...],
-  "certificates": [...]
-}
-```
+| Target | Description |
+| --- | --- |
+| `make resume` | Render Markdown + PDF for RESUME + INPUT |
+| `make validate` | Validate JSON schema + required key checks |
+| `make lint` | Run markdownlint on output files |
+| `make export-app-package` | Copy final PDF to application folder (COMPANY + ROLE vars) |
+| `make clean` | Delete output/*.md, output/*.pdf |
+| `make open` | Open final PDF |
+| `make optimize` | Interactive optimization flow for ATS tuning |
+| `make help` | List all available targets |
 
 ---
 
-## 🎨 Templates
+## 🧠 Warp Workflows
 
-### ✨ `xoi_style.j2`
+Stored in `.warp/workflows/`:
 
-- One-page layout optimized for recruiters
-- Helvetica Neue, tight vertical spacing
-- Clean formatting for skills, work history, and education
-- Used for both PDF and HTML builds
+- `resume_parse.yml`
+- `resume_validate_json.yml`
+- `resume_lint_md.yml`
+- `resume_render_resume_pdf.yml`
+- `resume_export_app_package.yml`
+- `resume_venv_activate.yml`
 
-### 🎨 `xoi_style.css`
-
-- Matches XOi-style PDF formatting
-- Used when rendering standalone HTML with Pandoc
-
----
-
-## 🛠 Makefile Targets
-
-```bash
-make resume RESUME=name        # Markdown + PDF from JSON in input/
-make resume-html RESUME=name   # HTML build from same JSON
-make deploy-pages RESUME=name  # Copy assets to /docs
-make export-app-package RESUME=name COMPANY=X ROLE=Y  # Output package to folder
-make validate RESUME=name      # Validate JSON
-make lint                      # Lint Markdown output
-make clean                     # Remove generated files
-```
+You can import them directly in Warp.
 
 ---
 
-## 🔄 Output Files
+## ✨ ATS Optimization Prompt
 
-| Format   | Path                                |
-|----------|-------------------------------------|
-| Markdown | `output/<name>.md`                 |
-| PDF      | `output/<name>.pdf`                |
-| HTML     | `output/<name>.html`               |
-| GH Pages | `docs/index.html`, `docs/resume.pdf` |
+See `Resume Prompts 2025/ATS Resume Optimizer.md`
+
+Use with GPT like: **CV + Resume: Job Interview Prep (Career PRO)**
 
 ---
 
-## 🌐 GitHub Pages (optional)
+## 📝 Notes
 
-To publish your resume:
-
-1. Enable Pages in repo → Settings → Pages
-2. Choose `main` or `clean-rebuild` branch
-3. Set folder: `docs/`
-4. Access your live resume at:
-
-```
-https://<your-username>.github.io/<your-repo-name>/
-```
-
----
-
-Made with ☕️, Markdown, and CLI power.
+- Always test with:  
+  `make resume RESUME=name INPUT=input/name.json`
+- Keep your base file untouched in `base/`
+- Validate before running export: `make validate`
