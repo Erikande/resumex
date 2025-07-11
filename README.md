@@ -35,34 +35,81 @@ resume-cli-v2/
 
 ## ✅ Usage
 
-### 🛠 Build Full Resume (Markdown + PDF)
+### 🧱 Build from JSON
+
+To build from any JSON file in `input/`, just provide its basename:
 
 ```bash
-make resume-xoi RESUME=erik-anderson_ic-base INPUT=base/resume_erik-anderson_ic-base.json
+make resume RESUME=your_resume_basename
 ```
 
-This renders:
+This expects a file at:
 
-- `output/resume_erik-anderson_ic-base.md`
-- `output/resume_erik-anderson_ic-base.pdf`
+```
+input/your_resume_basename.json
+```
+
+It will generate:
+
+- `output/your_resume_basename.md`
+- `output/your_resume_basename.pdf`
 
 ### 🌐 Build HTML Version
 
 ```bash
-make resume-html RESUME=erik-anderson_ic-base INPUT=base/resume_erik-anderson_ic-base.json
+make resume-html RESUME=your_resume_basename
 ```
 
-This renders:
+Generates:
 
-- `output/resume_erik-anderson_ic-base.html`
+- `output/your_resume_basename.html`
 
-### 🚀 Deploy to GitHub Pages
+### 📤 Deploy to GitHub Pages
 
 ```bash
-make deploy-pages RESUME=erik-anderson_ic-base
+make deploy-pages RESUME=your_resume_basename
 ```
 
-This copies `.html`, `.pdf`, and `.css` to `docs/` for GitHub Pages.
+Copies `.html`, `.pdf`, and `.css` to `docs/` for GH Pages:
+
+```
+docs/index.html
+docs/resume.pdf
+docs/style.css
+```
+
+### 📂 Export Application Package
+
+Save rendered resume to your organized app folder:
+
+```bash
+make export-app-package RESUME=your_resume_basename COMPANY=FedEx ROLE=Software_Quality_Engineer_Advisor
+```
+
+This creates:
+
+```
+~/Documents/Heather Job Stack/3. 📬 Applications/Sent/FedEx/
+└── Erik_Anderson_Software_Quality_Engineer_Advisor_Resume.pdf
+```
+
+🔖 *Cover letter functionality is disabled unless manually included.*
+
+### ✅ Validate JSON Resume
+
+```bash
+make validate RESUME=your_resume_basename
+```
+
+Checks against `schema_custom.json`
+
+### ✅ Lint Markdown
+
+```bash
+make lint
+```
+
+Runs `markdownlint` on all Markdown in `output/`
 
 ---
 
@@ -70,18 +117,13 @@ This copies `.html`, `.pdf`, and `.css` to `docs/` for GitHub Pages.
 
 - Python 3.8+
 - [Pandoc](https://pandoc.org/)
-- [MacTeX](https://tug.org/mactex/) or any `xelatex`-capable engine
+- [MacTeX](https://tug.org/mactex/) or any `xelatex` engine
 
-Install Python dependencies:
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
-```
-
-Install LaTeX on macOS:
-
-```bash
-brew install --cask mactex
+brew install --cask mactex  # macOS only
 ```
 
 ---
@@ -129,22 +171,24 @@ Each resume must follow the [JSON Resume Schema](https://jsonresume.org/schema/)
 ## 🛠 Makefile Targets
 
 ```bash
-make resume-xoi             # Markdown + PDF via xoi_style.j2
-make resume-html            # HTML from Markdown + CSS
-make deploy-pages           # Copy output to /docs for GitHub Pages
-make clean                  # Remove output files
-make validate               # Validate resume JSON against schema_custom.json
+make resume RESUME=name        # Markdown + PDF from JSON in input/
+make resume-html RESUME=name   # HTML build from same JSON
+make deploy-pages RESUME=name  # Copy assets to /docs
+make export-app-package RESUME=name COMPANY=X ROLE=Y  # Output package to folder
+make validate RESUME=name      # Validate JSON
+make lint                      # Lint Markdown output
+make clean                     # Remove generated files
 ```
 
 ---
 
 ## 🔄 Output Files
 
-| Format   | Path                              |
-|----------|-----------------------------------|
-| Markdown | `output/resume_<name>.md`         |
-| PDF      | `output/resume_<name>.pdf`        |
-| HTML     | `output/resume_<name>.html`       |
+| Format   | Path                                |
+|----------|-------------------------------------|
+| Markdown | `output/<name>.md`                 |
+| PDF      | `output/<name>.pdf`                |
+| HTML     | `output/<name>.html`               |
 | GH Pages | `docs/index.html`, `docs/resume.pdf` |
 
 ---

@@ -35,3 +35,7 @@ resume.json
 # Node.js
 node_modules/
 input/archive/
+
+# Ignore all personal or generated inputs
+input/
+
